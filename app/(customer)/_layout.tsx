@@ -6,7 +6,21 @@ export default function CustomerLayout() {
     return (
         <Tabs screenOptions={{
             headerShown: true,
-            headerRight: () => <LogoutButton />
+            headerRight: () => <LogoutButton />,
+            tabBarActiveTintColor: '#FF6B00',
+            tabBarInactiveTintColor: '#999',
+            tabBarStyle: {
+                borderTopWidth: 1,
+                borderTopColor: '#F0F0F0',
+                paddingTop: 4,
+            },
+            headerStyle: {
+                backgroundColor: '#FF6B00',
+            },
+            headerTintColor: '#FFF',
+            headerTitleStyle: {
+                fontWeight: 'bold',
+            },
         }}>
             <Tabs.Screen
                 name="home"
@@ -41,10 +55,21 @@ export default function CustomerLayout() {
             <Tabs.Screen
                 name="stock"
                 options={{
-                    title: 'Stock Availability',
+                    title: 'Stock',
                     tabBarLabel: 'Stock',
                     tabBarIcon: ({ color, size }) => (
                         <Ionicons name="cube-outline" size={size} color={color} />
+                    ),
+                }}
+            />
+            <Tabs.Screen
+                name="profile"
+                options={{
+                    title: 'My Profile',
+                    tabBarLabel: 'Profile',
+                    headerRight: () => null,
+                    tabBarIcon: ({ color, size }) => (
+                        <Ionicons name="person-circle-outline" size={size} color={color} />
                     ),
                 }}
             />

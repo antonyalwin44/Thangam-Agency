@@ -309,7 +309,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#F5F5F5',
+        backgroundColor: '#FFFFFF',
     },
     bannerContainer: {
         flexGrow: 0,
@@ -361,6 +361,7 @@ const styles = StyleSheet.create({
     },
     content: {
         flex: 1,
+        backgroundColor: '#FFFFFF',
     },
     stockCheckButton: {
         flexDirection: 'row',

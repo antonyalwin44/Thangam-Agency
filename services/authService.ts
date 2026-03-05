@@ -5,12 +5,20 @@ import { User, UserRole } from '../types';
 /**
  * Sign Up with Email and Password
  */
-export const signUp = async (email: string, password: string): Promise<{ session: Session | null; error: any }> => {
+export const signUp = async (email: string, password: string, name?: string): Promise<{ session: Session | null; error: any }> => {
     try {
         const { data, error } = await supabase.auth.signUp({
             email,
             password,
         });
+
+        // Save name to users table if provided and user was created
+        if (!error && data.user && name) {
+            await supabase
+                .from('users')
+                .update({ name })
+                .eq('id', data.user.id);
+        }
 
         return { session: data.session, error };
     } catch (error: any) {
@@ -103,6 +111,36 @@ export const updateUserRole = async (userId: string, role: UserRole): Promise<{ 
         .eq('id', userId);
 
     return { error };
+};
+
+/**
+ * Update customer profile (name, address)
+ */
+export const updateUserProfile = async (
+    userId: string,
+    updates: { name?: string; address?: string }
+): Promise<{ error: any }> => {
+    const { error } = await supabase
+        .from('users')
+        .update(updates)
+        .eq('id', userId);
+
+    return { error };
+};
+
+/**
+ * Reset Password via Email
+ */
+export const resetPassword = async (email: string): Promise<{ error: any }> => {
+    try {
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+            redirectTo: 'buildmate://reset-password',
+        });
+        return { error };
+    } catch (error: any) {
+        console.error('Error sending password reset email:', error);
+        return { error };
+    }
 };
 
 /**

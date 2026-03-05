@@ -24,9 +24,12 @@ export default function DriverDashboard() {
 
         setLoading(true);
         const unsubscribe = subscribeToOrders((fetchedOrders) => {
-            // Filter orders assigned to this driver
+            // Show all Loading, OutForDelivery, and Delivered orders for the driver
             const driverOrders = fetchedOrders.filter(
-                (order) => order.driverId === user.id || order.status === 'Loading'
+                (order) =>
+                    order.status === 'Loading' ||
+                    order.status === 'OutForDelivery' ||
+                    order.status === 'Delivered'
             );
             setOrders(driverOrders);
             setLoading(false);
@@ -249,23 +252,18 @@ const DriverOrderCard: React.FC<DriverOrderCardProps> = ({
                     )}
 
                     {isInTransit && (
-                        <>
-                            <TouchableOpacity style={styles.secondaryButton}>
-                                <Text style={styles.secondaryButtonText}>📍 View Map</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                style={styles.primaryButton}
-                                onPress={() => onCompleteDelivery(order)}
-                            >
-                                <Text style={styles.primaryButtonText}>✓ Mark Delivered</Text>
-                            </TouchableOpacity>
-                        </>
+                        <TouchableOpacity
+                            style={styles.primaryButton}
+                            onPress={() => onCompleteDelivery(order)}
+                        >
+                            <Text style={styles.primaryButtonText}>✓ Mark Delivered</Text>
+                        </TouchableOpacity>
                     )}
 
-                    {isDelivered && order.deliveredAt && (
+                    {isDelivered && (
                         <View style={styles.deliveredBanner}>
                             <Text style={styles.deliveredText}>
-                                ✅ Delivered on {new Date(order.deliveredAt).toLocaleDateString('en-IN')}
+                                ✅ Delivered{order.deliveredAt ? ` on ${new Date(order.deliveredAt).toLocaleDateString('en-IN')}` : ''}
                             </Text>
                         </View>
                     )}

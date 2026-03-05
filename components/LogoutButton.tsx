@@ -48,12 +48,17 @@ export const LogoutButton = () => {
 
 const styles = StyleSheet.create({
     button: {
-        marginRight: 16,
-        padding: 8,
+        marginRight: 12,
+        paddingHorizontal: 14,
+        paddingVertical: 6,
+        backgroundColor: 'rgba(255,255,255,0.25)',
+        borderRadius: 20,
+        borderWidth: 1,
+        borderColor: 'rgba(255,255,255,0.5)',
     },
     text: {
-        color: '#FF6B00',
-        fontWeight: '600',
-        fontSize: 16,
+        color: '#FFFFFF',
+        fontWeight: '700',
+        fontSize: 14,
     },
 });
