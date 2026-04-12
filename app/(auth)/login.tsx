@@ -75,11 +75,7 @@ export default function Login() {
                 setLoading(false);
 
                 if (userData) {
-                    if (userData.role === 'admin') {
-                        alert('Debug: Role is ADMIN. Attempting redirect to /(admin)/dashboard');
-                    } else {
-                        alert(`Debug: Role is ${userData.role}. Redirecting to user home.`);
-                    }
+                    console.log('DEBUG: User role is', userData.role);
 
                     switch (userData.role) {
                         case 'admin':
@@ -94,7 +90,7 @@ export default function Login() {
                             break;
                     }
                 } else {
-                    alert('Debug: User Profile NOT FOUND. Check Database RLS or Trigger.');
+                    console.warn('DEBUG: User Profile NOT FOUND. Check Database RLS or Trigger.');
                     router.replace('/(customer)/home');
                 }
             } else {
